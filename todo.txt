@@ -1,3 +1,5 @@
+du pur markdown avec la possibilté de gérer des blocs typés.
+
 http://deveiate.org/projects/BlueCloth
 
 un fichier book.yml
@@ -10,3 +12,13 @@ qui permettera de fournir
 0_toto.tex la conversion du .raw.html en LaTeX
 0_toto.booklet.tex un emballage sommaire pour une preview
 0_toto.booklet.pdf la preview en pdf
+
+les images sont dans un format neutre, non destructif, si possible. Elles seront mouliné au dernier moment. Tiff, svg, png ...
+
+on peut pousser le contenu vers un drupal via xmlrpc
+
+faire un PDF pour écran (avec hyperlien)
+
+un pdf pour imprimer avec des images hautes def
+
+un ebook (en epub)
