@@ -1,0 +1,12 @@
+http://deveiate.org/projects/BlueCloth
+
+un fichier book.yml
+chaque chapitre fournit n fichiers :
+0_toto.mkd
+0_toto.yml (optionnel)
+qui permettera de fournir
+0_toto.raw.html la conversion html brut du markdown, sans header
+0_toto.html un emballage sommaire pour avoir une preview
+0_toto.tex la conversion du .raw.html en LaTeX
+0_toto.booklet.tex un emballage sommaire pour une preview
+0_toto.booklet.pdf la preview en pdf
