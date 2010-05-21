@@ -1,17 +1,14 @@
 require 'bluecloth'
 
 namespace :markdown do
-	task :test do
-		Dir.glob('*.{md,mkd,markdown}') do |path|
-			html = File.basename(path, '.' + path.split('.')[-1]) + '.html'
-			if not File.exist? html or File.atime(path) > File.atime(html)
-				puts path
-				f = File.new html, 'w'
-				f.write BlueCloth::new( IO.read(path) ).to_html
-				f.close
-			end
-		end
+
+	rule '.html' => '.md' do |t|
+		puts t.name
+		f = File.new t.name, 'w'
+		f.write BlueCloth::new( IO.read(t.source) ).to_html
+		f.close
 	end
+
 end
 
-task :default => 'markdown:test'
+task :default => 'README.html'
