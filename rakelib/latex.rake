@@ -14,8 +14,9 @@ namespace :latex do
 	rule '.tex' => '.html' do |t|
 		p t.name
 		f = File.open(t.source)
-		doc = Nokogiri::HTML(f)
-		p doc.root()
+		#doc = Nokogiri::HTML(f)
+		#p doc.root()
+		puts parse(f.read)
 		f.close
 		# out = File.open(t.name, 'w')
 		# out.write 'prout'
