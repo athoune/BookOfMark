@@ -1,7 +1,7 @@
 Book of Mark
 ============
 
-Build book from mardown files. Books can be PDF (via _LaTeX_) or eBook.
+Build book from markdown files. Books can be PDF (via _LaTeX_) or **eBook**.
 
 
 Install
