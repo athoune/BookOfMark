@@ -8,12 +8,12 @@ def tag name, latex
 end
 
 #\begin \end
-def tagblock name, latex
+def begin_end_tag name, latex
 	@tags[name.id2name] = LatexTag.new(name , "\\begin{#{latex}}", "\\end{#{latex}}")
 end
 
 #just a mark
-def tagmark name, latex
+def empty_tag name, latex
 	@tags[name.id2name] = LatexTag.new(name, "\\{#{latex}}")
 end
 

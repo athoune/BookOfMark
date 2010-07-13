@@ -1,13 +1,16 @@
 require 'nokogiri'
 require 'lib/html2tex'
 
-tagblock :code, 'verbatim'
+tag :h1, 'section'
+tag :h2, 'subsection'
 
-tagblock :ul, 'enumerate'
+begin_end_tag :code, 'verbatim'
+begin_end_tag :ul,   'enumerate'
 
-tagmark :li, 'item'
+empty_tag :li, 'item'
 
-tag :em, 'textit'
+tag :em,     'textit'
+tag :strong, 'textbf'
 
 namespace :latex do
 	desc "html vers latex"
