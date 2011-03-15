@@ -13,7 +13,7 @@ bla bla bla
 
 class IndexTest < Test::Unit::TestCase
 	def test_read
-		idx = parse SAMPLE
+		idx = Html2index.parse SAMPLE
 		assert_equal [["h1", "Book of mark"],
 		 ["h2", "Install"],
 		 ["h3", "MacOS"],
@@ -21,7 +21,7 @@ class IndexTest < Test::Unit::TestCase
 		 ["h2", "Usage"]], idx.headers
 	end
 	def test_tree
-		idx = parse SAMPLE
+		idx = Html2index.parse SAMPLE
 		assert_equal [[
 			["h1", "Book of mark"],[
 				["h2", "Install"], [
