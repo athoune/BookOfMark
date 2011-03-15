@@ -14,10 +14,21 @@ bla bla bla
 class IndexTest < Test::Unit::TestCase
 	def test_read
 		idx = parse SAMPLE
-		pp idx.headers
+		assert_equal [["h1", "Book of mark"],
+		 ["h2", "Install"],
+		 ["h3", "MacOS"],
+		 ["h3", "Linux"],
+		 ["h2", "Usage"]], idx.headers
 	end
-	# def test_tree
-	# 	idx = parse SAMPLE
-	# 	pp idx.tree
-	# end
+	def test_tree
+		idx = parse SAMPLE
+		assert_equal [[
+			["h1", "Book of mark"],[
+				["h2", "Install"], [
+					["h3", "MacOS"], ["h3", "Linux"]
+				],
+				["h2", "Usage"]
+			]
+		]],  idx.tree
+	end
 end
