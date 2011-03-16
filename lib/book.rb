@@ -34,6 +34,8 @@ module BookOfMark
 		end
 		def to_html_splitted header=1
 			pages = []
+			#[FIXME] bug when book doesn't start with a h1
+			#[FIXME] split also on n-1
 			self.to_html.split("<h#{header} ").each do |page|
 				pages << "<h#{header} #{page}" if page.strip != ""
 			end
