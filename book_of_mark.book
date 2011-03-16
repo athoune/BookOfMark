@@ -1,0 +1,7 @@
+title: The Book of Mark
+author: Mathieu Lecarme
+toc:
+    - doc/install.md
+    - doc/html.md
+    - doc/pdf.md
+    
