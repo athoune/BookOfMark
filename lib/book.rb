@@ -2,6 +2,8 @@ require 'rubygems'
 require 'yaml'
 require 'maruku'
 
+require 'html2index'
+
 module BookOfMark
 	class Book
 		def initialize description
@@ -18,7 +20,7 @@ module BookOfMark
 		def sources
 			buffer = ""
 			@config['toc'].each do |source|
-				buffer += IO.read(@folder + source)
+				buffer += IO.read(@folder + source) + "\n"
 			end
 			@md = Maruku.new(buffer)
 			buffer
@@ -32,6 +34,10 @@ module BookOfMark
 		end
 		def to_latex
 			self.md.to_latex
+		end
+		def to_toc
+			#self.md.toc
+			Html2index.parse(self.to_html).tree
 		end
 	end
 end
