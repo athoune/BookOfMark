@@ -32,6 +32,13 @@ module BookOfMark
 		def to_html
 			self.md.to_html
 		end
+		def to_html_splitted header=1
+			pages = []
+			self.to_html.split("<h#{header} ").each do |page|
+				pages << "<h#{header} #{page}" if page.strip != ""
+			end
+			pages
+		end
 		def to_latex
 			self.md.to_latex
 		end
