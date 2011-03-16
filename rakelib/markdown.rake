@@ -1,4 +1,9 @@
-require 'bluecloth'
+begin
+  require 'rdiscount'
+  BlueCloth = RDiscount
+rescue LoadError
+  require 'bluecloth'
+end
 
 namespace :markdown do
 
