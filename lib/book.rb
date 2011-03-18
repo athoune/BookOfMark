@@ -6,6 +6,7 @@ require 'html2index'
 
 module BookOfMark
 	class Book
+		attr :folder
 		def initialize description
 			@md = nil
 			@path = description
