@@ -7,6 +7,7 @@ require 'html2index'
 module BookOfMark
 	class Book
 		attr :folder
+		#read a .book description
 		def initialize description
 			@md = nil
 			@path = description
@@ -18,6 +19,10 @@ module BookOfMark
 			end
 			@config = YAML.load_file description
 		end
+		def source
+			@config['toc']
+		end
+		#concatened markdown source
 		def sources
 			buffer = ""
 			@config['toc'].each do |source|
@@ -26,10 +31,12 @@ module BookOfMark
 			@md = Maruku.new(buffer)
 			buffer
 		end
+		#lazy markdown instance
 		def md
 			self.sources if @md == nil
 			@md
 		end
+		#one big html
 		def to_html
 			self.md.to_html
 		end
@@ -42,9 +49,11 @@ module BookOfMark
 			end
 			pages
 		end
+		#one big latex
 		def to_latex
 			self.md.to_latex
 		end
+		#table of content
 		def to_toc
 			#self.md.toc
 			Html2index.parse(self.to_html).tree
