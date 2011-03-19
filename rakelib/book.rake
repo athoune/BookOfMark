@@ -3,6 +3,7 @@ require 'json'
 $LOAD_PATH << 'lib'
 require 'book'
 require 'filelist'
+require 'html2index'
 
 namespace :book do
 	directory 'build/raw_html'
@@ -41,15 +42,12 @@ namespace :book do
 	end
 
 	task :index => :raw_html do
-		idx = "build/raw_html/index.json"
-		f = book.html_files
-		create f => idx do
+		IDX = "build/raw_html/index.json"
+		create book.html_files => IDX do
 			info "new index"
 			buffer = ''
-			f.each do |html|
-				buffer += IO.read(html) + "\n"
-			end
-			File.open(idx, 'w') do |f|
+			book.html_files.each{ |html| buffer += IO.read(html) + "\n"}
+			File.open(IDX, 'w') do |f|
 				f.write Html2index.parse(buffer).tree.to_json
 			end
 		end
