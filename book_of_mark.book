@@ -1,8 +1,8 @@
 title: The Book of Mark
 author: Mathieu Lecarme
 toc:
-    - doc/purpose.md
-    - doc/install.md
-    - doc/html.md
-    - doc/pdf.md
+    - purpose.md
+    - install.md
+    - html.md
+    - pdf.md
     
