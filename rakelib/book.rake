@@ -1,4 +1,5 @@
 require 'pp'
+require 'json'
 $LOAD_PATH << 'lib'
 require 'book'
 require 'filelist'
@@ -22,11 +23,25 @@ namespace :book do
 			end
 		end
 	end
+
 	task :clean do
 		rm_rf 'build'
 	end
-	task :index do
-		pp books.to_toc
+
+	task :index => :raw_html do
+		idx = "build/raw_html/index.json"
+		f = FileList.new books.source.map {|source| 'build/raw_html/' + source.ext('html')}
+		if not(File.file? idx) or File.mtime(idx) < f.lastModification
+			pp "new index"
+			buffer = ''
+			books.source.each do |source|
+				target = 'build/raw_html/' + source.ext('html')
+				buffer += IO.read(target) + "\n"
+			end
+			File.open(idx, 'w') do |f|
+				f.write Html2index.parse(buffer).tree.to_json
+			end
+		end
 	end
 
 end
