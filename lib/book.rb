@@ -1,9 +1,6 @@
 require 'rubygems'
 require 'yaml'
 require 'rake'
-require 'maruku'
-
-require 'html2index'
 
 module BookOfMark
 	class Book
@@ -27,10 +24,10 @@ module BookOfMark
 			@config['title']
 		end
 		def markdown_files
-			FileList.new self.toc.map{ |source| "#{@folder}/source/#{source}"}
+			@markdown_files ||= FileList.new self.toc.map{ |source| "#{@folder}/source/#{source}"}
 		end
 		def html_files
-			FileList.new self.toc.map{ |source| "#{@folder}/build/raw_html/#{source.ext('html')}"}
+			@html_files ||= FileList.new self.toc.map{ |source| "#{@folder}/build/raw_html/#{source.ext('html')}"}
 		end
 	end
 end
