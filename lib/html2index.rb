@@ -60,31 +60,30 @@ module Html2index
 			t = Tree.new
 			t.feed @headers
 			t.tree
-		# 	hh = @headers
-		# 	before = hh.shift
-		# 	t = [[before]]
-		# 	current = t[0]
-		# 	stairs = [before[0]]
-		# 	hh.each do |h|
-		# 		if h[0] == stairs[-1]
-		# 			current << h
-		# 		else
-		# 			if h[0] > stairs[-1]
-		# 				stairs << h[0]
-		# 				current << [h]
-		# 				current = current[-1]
-		# 			else
-		# 				stairs.pop
-		# 			end
-		# 		end
-		# 		pp stairs
-		# 	end
-		# 	t
+		end
+	end
+
+	class XHTML2Img < Nokogiri::XML::SAX::Document
+		attr :imgs
+		def initialize
+			@imgs = []
+		end
+		def start_element name, attributes = []
+			if name == "img"
+				poz = attributes.index 'src'
+				@imgs << attributes[poz+1] if poz != nil
+			end
 		end
 	end
 
 	def Html2index.parse xhtml
 		x = XHTML2Index.new
+		parser = Nokogiri::HTML::SAX::Parser.new x
+		parser.parse xhtml
+		x
+	end
+	def self.imgs xhtml
+		x = XHTML2Img.new
 		parser = Nokogiri::HTML::SAX::Parser.new x
 		parser.parse xhtml
 		x
