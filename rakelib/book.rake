@@ -26,7 +26,7 @@ namespace :book do
 	task :raw_html => 'build/raw_html' do
 		book.toc.each do |source|
 			target = 'build/raw_html/' + source.ext('html')
-			create target => "source/#{source}" do
+			create "source/#{source}" => target do
 				info "converting #{source} => #{target}"
 				m = Maruku.new IO.read("source/#{source}")
 				File.open(target, 'w') do |f|
@@ -72,6 +72,11 @@ namespace :book do
 		create 'build/one_html/one_html.helpindex' => 'build/one_html/index.html' do
 			sh "hiutil -C build/one_html"
 		end
+	end
+	
+	task :img => :one_html do
+		i = Html2index.imgs IO.read('build/one_html/index.html')
+		pp i.imgs
 	end
 
 end
