@@ -1,5 +1,6 @@
 title: The Book of Mark
 author: Mathieu Lecarme
+lang: en
 toc:
     - purpose.md
     - install.md
