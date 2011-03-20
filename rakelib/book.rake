@@ -7,6 +7,7 @@ $LOAD_PATH << 'lib'
 require 'book'
 require 'filelist'
 require 'html2index'
+require 'latex'
 
 namespace :book do
 
@@ -81,6 +82,9 @@ namespace :book do
 					end
 				end
 			end
+			MaRuKu::Out::Latex::Medias.each do |media|
+				cp "source/#{media}", "build/raw_latex/#{media}"
+			end
 		end
 		task :latex => :raw_latex do
 			create book.path => 'build/raw_latex/__index.tex' do
@@ -92,7 +96,9 @@ namespace :book do
 		task :pdf => :latex do
 			create 'build/raw_latex/__index.tex' => 'build/raw_latex/__index.pdf'  do
 				Dir.chdir 'build/raw_latex' do
-					sh 'pdflatex __index.tex'
+					2.times do
+						sh 'pdflatex __index.tex'
+					end
 				end
 			end
 		end
