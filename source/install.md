@@ -12,5 +12,5 @@ you just have to write *markdown* files and one *YAML*
 ### Gems
 You need some ruby gems
 
-	sudo gem install bluecloth
+	sudo gem install maruku
 	sudo gem install nokogiri
