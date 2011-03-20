@@ -8,7 +8,7 @@ module MaRuKu
 				# pp self.url
 				# pp self.title
 				Medias << self.url
-				"\\includegraphics{#{self.url}}"
+				"\\includegraphics[width=10cm]{#{self.url}}"
 			end
 		end
 	end
