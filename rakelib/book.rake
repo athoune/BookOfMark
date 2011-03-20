@@ -1,5 +1,8 @@
 require 'pp'
 require 'json'
+require 'erb'
+require 'rubygems'
+require 'maruku'
 $LOAD_PATH << 'lib'
 require 'book'
 require 'filelist'
@@ -8,6 +11,7 @@ require 'html2index'
 namespace :book do
 	directory 'build/raw_html'
 	directory 'build/one_html'
+	directory 'build/raw_latex'
 
 	def book
 		@book ||= BookOfMark::Book.new FileList.new('*.book')[0]
@@ -33,6 +37,35 @@ namespace :book do
 				File.open(target, 'w') do |f|
 					f.write m.to_html
 				end
+			end
+		end
+	end
+
+	task :raw_latex => 'build/raw_latex' do
+		book.toc.each do |source|
+			target = 'build/raw_latex/' + source.ext('tex')
+			create "source/#{source}" => target do
+				info "converting #{source} => #{target}"
+				m = Maruku.new IO.read("source/#{source}")
+				File.open(target, 'w') do |f|
+					f.write m.to_latex
+				end
+			end
+		end
+	end
+
+	task :latex => :raw_latex do
+		create book.path => 'build/raw_latex/__index.tex' do
+			File.open('build/raw_latex/__index.tex', 'w') do |f|
+				f.write ERB.new(IO.read 'lib/template/book.tex.rhtml').result(book.getBinding)
+			end
+		end
+	end
+	
+	task :pdf => :latex do
+		create 'build/raw_latex/__index.tex' => 'build/raw_latex/__index.pdf'  do
+			Dir.chdir 'build/raw_latex' do
+				sh 'pdflatex __index.tex'
 			end
 		end
 	end

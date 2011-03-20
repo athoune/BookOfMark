@@ -1,0 +1,22 @@
+\documentclass[12pt,a4paper]{book}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{hyperref}
+\usepackage{xspace}
+\usepackage[usenames,dvipsnames]{color}
+\hypersetup{colorlinks=true,urlcolor=blue}
+
+
+\begin{document}
+
+\title{\Huge <%= book.title %>}
+\author{\Huge <%= book.author %>}
+\maketitle
+
+\tableofcontents
+
+<% book.toc.each do |page| %>
+\include{<%= page.ext('') %>}
+<% end %>
+
+\end{document}
