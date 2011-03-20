@@ -96,7 +96,7 @@ namespace :book do
 			end
 		end
 		task :pdf => :latex do
-			create 'build/raw_latex/__index.pdf' => 'build/raw_latex/__index.tex' do
+			create FileList.new('build/raw_latex/*.tex') => 'build/raw_latex/__index.pdf' do
 				Dir.chdir 'build/raw_latex' do
 					2.times do
 						sh 'pdflatex __index.tex'
