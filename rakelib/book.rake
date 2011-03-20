@@ -83,7 +83,9 @@ namespace :book do
 				end
 			end
 			MaRuKu::Out::Latex::Medias.each do |media|
-				cp "source/#{media}", "build/raw_latex/#{media}"
+				create "source/#{media}" => "build/raw_latex/#{media}" do
+					cp "source/#{media}", "build/raw_latex/#{media}"
+				end
 			end
 		end
 		task :latex => :raw_latex do
@@ -94,7 +96,7 @@ namespace :book do
 			end
 		end
 		task :pdf => :latex do
-			create 'build/raw_latex/__index.tex' => 'build/raw_latex/__index.pdf'  do
+			create 'build/raw_latex/__index.pdf' => 'build/raw_latex/__index.tex' do
 				Dir.chdir 'build/raw_latex' do
 					2.times do
 						sh 'pdflatex __index.tex'
