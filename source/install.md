@@ -8,7 +8,20 @@ you just have to write *markdown* files and one *YAML*
 
 ### Rake
 
+Rake can be installed with a package
+
+	sudo apt-get install rake
+{:shell}
+
+or with a gem
+
+	sudo gem install rake
+{:shell}
+
+You need a *Rakefile* (even an empty one)
+
 	touch Rakefile
+{:shell}
 
 ### Gems
 You need some ruby gems
