@@ -37,4 +37,40 @@ module BookOfMark
 			return binding()
 		end
 	end
+	def book
+		@book ||= BookOfMark::Book.new FileList.new('*.book')[0]
+	end
+	def create st
+		source = st.keys[0]
+		target = st[source]
+		mtime = (source.class == FileList) ? source.lastModification : File.mtime(source)
+		yield self if not(File.file? target) or mtime > File.mtime(target)
+	end
+	# Convert markdown to html and filter it
+	def md2html
+		book.toc.each do |source|
+			target = 'build/raw_html/' + source.ext('html')
+			create "source/#{source}" => target do
+				info "converting #{source} => #{target}"
+				m = Maruku.new IO.read("source/#{source}")
+				File.open(target, 'w') do |f|
+					if block_given?
+						html = m.to_filtered_html do |doc|
+							yield doc
+						end
+					else
+						html = m.to_html
+					end
+					f.write html
+				end
+			end
+		end
+	end
+	
+	def template template, data, result
+		File.open(result, 'w') do |f|
+			f.write ERB.new(IO.read template).result(data)
+		end
+	end
+	
 end
