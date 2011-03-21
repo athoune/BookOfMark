@@ -5,10 +5,20 @@
 \usepackage{xspace}
 \usepackage{graphicx}
 \usepackage[usenames,dvipsnames]{color}
-\hypersetup{colorlinks=true,urlcolor=blue}
+\hypersetup{
+	colorlinks=true,
+	urlcolor=blue,
+	bookmarks=true
+}
+\hypersetup{  
+	pdfinfo={
+		Title={<%= book.title %>},
+		Author={<%= book.author %>},
+		Lang={<%= book.lang%>}
+	}}
 
 \title{\Huge <%= book.title %>}
-\author{\Huge <%= book.author %>}
+\author{<%= book.author %>}
 
 \begin{document}
 
