@@ -3,7 +3,6 @@ Book of Mark
 
 Build book from markdown files. Books can be PDF (via _LaTeX_) or **eBook**.
 
-
 Install
 =======
 
