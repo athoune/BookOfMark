@@ -1,0 +1,9 @@
+<html>
+	<head>
+		<title><%= book.title %></title>
+	</head>
+	<body>
+<% book.html_files.each do |html| %>
+<%= IO.read(html) %>
+<% end %>
+</body>

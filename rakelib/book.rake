@@ -27,25 +27,31 @@ namespace :book do
 		yield self if not(File.file? target) or mtime > File.mtime(target)
 	end
 
+	def md2html
+		book.toc.each do |source|
+			target = 'build/raw_html/' + source.ext('html')
+			create "source/#{source}" => target do
+				info "converting #{source} => #{target}"
+				m = Maruku.new IO.read("source/#{source}")
+				File.open(target, 'w') do |f|
+					html = m.to_filtered_html do |doc|
+						yield doc
+					end
+					f.write html
+				end
+			end
+		end
+	end
+
 	namespace :html do
 		directory 'build/raw_html'
 		directory 'build/one_html'
 
 		task :raw_html => 'build/raw_html' do
-			book.toc.each do |source|
-				target = 'build/raw_html/' + source.ext('html')
-				create "source/#{source}" => target do
-					info "converting #{source} => #{target}"
-					m = Maruku.new IO.read("source/#{source}")
-					File.open(target, 'w') do |f|
-						html = m.to_filtered_html do |doc|
-							6.times do |i|
-								doc.css("h#{i}").each do |h|
-									h.before "<a name=#{h.text}></a>"
-								end
-							end
-						end
-						f.write html
+			md2html do |doc|
+				6.times do |i|
+					doc.css("h#{i}").each do |h|
+						h.before "<a name=#{h.text}></a>"
 					end
 				end
 			end
@@ -64,16 +70,10 @@ namespace :book do
 		task :one_html => [:index, 'build/one_html'] do
 			create 'build/raw_html/index.json' => 'build/one_html/index.html' do
 				File.open('build/one_html/index.html', 'w') do |f|
-					f.write '<html><head><title>'
-					f.write book.title
-					f.write '</title></head><head>'
-					f.write '<body>'
-					book.html_files.each{ |html| f.write IO.read(html)}
-					f.write '</body>'
+					f.write ERB.new(IO.read 'lib/template/one_html.rhtml').result(book.getBinding)
 				end
 			end
 		end
-		
 	end
 	
 	namespace :latex do
