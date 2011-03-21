@@ -27,6 +27,9 @@ module BookOfMark
 		def author
 			@config['author']
 		end
+		def lang
+			@config['lang']
+		end
 		def markdown_files
 			@markdown_files ||= FileList.new self.toc.map{ |source| "#{@folder}/source/#{source}"}
 		end
