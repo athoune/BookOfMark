@@ -39,8 +39,10 @@ namespace :book do
 					m = Maruku.new IO.read("source/#{source}")
 					File.open(target, 'w') do |f|
 						html = m.to_filtered_html do |doc|
-							doc.css('h1').each do |h1|
-								h1.before "<!-- #{h1.text} -->"
+							6.times do |i|
+								doc.css("h#{i}").each do |h|
+									h.before "<a name=#{h.text}></a>"
+								end
 							end
 						end
 						f.write html
