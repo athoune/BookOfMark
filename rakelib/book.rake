@@ -34,8 +34,12 @@ namespace :book do
 				info "converting #{source} => #{target}"
 				m = Maruku.new IO.read("source/#{source}")
 				File.open(target, 'w') do |f|
-					html = m.to_filtered_html do |doc|
-						yield doc
+					if block_given?
+						html = m.to_filtered_html do |doc|
+							yield doc
+						end
+					else
+						html = m.to_html
 					end
 					f.write html
 				end
