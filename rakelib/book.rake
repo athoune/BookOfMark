@@ -42,6 +42,12 @@ namespace :book do
 			end
 		end
 	end
+	
+	def template template, data, result
+		File.open(result, 'w') do |f|
+			f.write ERB.new(IO.read template).result(data)
+		end
+	end
 
 	namespace :html do
 		directory 'build/raw_html'
@@ -69,9 +75,7 @@ namespace :book do
 		end
 		task :one_html => [:index, 'build/one_html'] do
 			create 'build/raw_html/index.json' => 'build/one_html/index.html' do
-				File.open('build/one_html/index.html', 'w') do |f|
-					f.write ERB.new(IO.read 'lib/template/one_html.rhtml').result(book.getBinding)
-				end
+				template 'lib/template/one_html.rhtml', book.getBinding, 'build/one_html/index.html'
 			end
 		end
 	end
@@ -98,9 +102,7 @@ namespace :book do
 		end
 		task :latex => :raw_latex do
 			create book.path => 'build/raw_latex/__index.tex' do
-				File.open('build/raw_latex/__index.tex', 'w') do |f|
-					f.write ERB.new(IO.read 'lib/template/book.tex.rhtml').result(book.getBinding)
-				end
+				template 'lib/template/book.tex.rhtml', book.getBinding, 'build/raw_latex/__index.tex'
 			end
 		end
 		task :pdf => :latex do
