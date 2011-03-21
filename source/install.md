@@ -1,3 +1,4 @@
+{:shell:    lang=sh code_background_color='#efefff'}
 # Install
 
 ## Ruby
@@ -14,3 +15,4 @@ You need some ruby gems
 
 	sudo gem install maruku
 	sudo gem install nokogiri
+{:shell}
