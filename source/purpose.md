@@ -23,6 +23,10 @@ The source code is clean and human readable.
 [ERB](http://www.ruby-doc.org/stdlib/libdoc/erb/rdoc/) is the default template format for ruby.
 It's hugly, but it's simple, and standard.
 
+## CSS
+
+Maruku provides naked HTML conversion. You can beautify it with CSS pattern, with the help of Nokogiri.
+
 ## Rake
 
 [Rake](http://rake.rubyforge.org/) is ruby build tool. You can use it without knowing ruby.
