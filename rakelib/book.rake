@@ -8,6 +8,7 @@ require 'book'
 require 'filelist'
 require 'html2index'
 require 'latex'
+require 'filter'
 
 namespace :book do
 
@@ -37,7 +38,12 @@ namespace :book do
 					info "converting #{source} => #{target}"
 					m = Maruku.new IO.read("source/#{source}")
 					File.open(target, 'w') do |f|
-						f.write m.to_html
+						html = m.to_filtered_html do |doc|
+							doc.css('h1').each do |h1|
+								h1.before "<!-- #{h1.text} -->"
+							end
+						end
+						f.write html
 					end
 				end
 			end
