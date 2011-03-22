@@ -20,6 +20,7 @@ namespace :book do
 	namespace :html do
 		directory 'build/raw_html'
 		directory 'build/one_html'
+		directory 'build/ditaa'
 
 		task :raw_html => 'build/raw_html' do
 			md2html do |doc|
@@ -78,6 +79,19 @@ namespace :book do
 				Dir.chdir 'build/raw_latex' do
 					2.times do
 						sh 'pdflatex __index.tex'
+					end
+				end
+			end
+		end
+	end
+
+	namespace :ditaa do
+		task :convert => 'build/ditaa' do
+			Dir.chdir 'source/' do
+				FileList.new('*.ditaa').each do |ditaa|
+					target = "../build/ditaa/" + ditaa.ext('png')
+					create ditaa => target do
+						sh "ditaa #{ditaa} #{target}"
 					end
 				end
 			end
