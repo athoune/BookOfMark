@@ -4,6 +4,7 @@ Book of Mark is a tool to build documentation from markdown files.
 
 Your book is described with a *YAML* file, templates are good old *erb* files,
 and html is filtered with *css* pattern. The build is done with *rake*.
+This is the classical MVC patterns.
 
 ![Mark the Evangelist](Mark_the_Evangelist.png "Engraving of Mark the Evangelist")
 
@@ -16,6 +17,10 @@ It's git proof, and even subversion proof.
 
 You can use it as is, with only a *.book* file, you can customize template, and,
 last level you can use it as a toolbox and building your own rake file and specific workflow.
+
+## The big picture
+
+![Book of Mark Workflow](html.png)
 
 ## Technology
 
