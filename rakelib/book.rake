@@ -20,7 +20,7 @@ namespace :book do
 	namespace :html do
 		directory 'build/raw_html'
 		directory 'build/one_html'
-		directory 'build/ditaa'
+		directory 'build/medias'
 
 		task :raw_html => 'build/raw_html' do
 			md2html do |doc|
@@ -42,7 +42,12 @@ namespace :book do
 				end
 			end
 		end
-		task :one_html => [:index, 'build/one_html', 'ditaa:html'] do
+		task :one_html => [:index, 'build/one_html', '^medias'] do
+			Html2index.imgs(IO.read('build/one_html/index.html')).imgs.each do |img|
+				path = "source/#{img}"
+				cp path, "build/one_html/#{img}" if File.exist? path
+			end
+			cp FileList['build/medias/*'], 'build/one_html/'
 			create 'build/raw_html/index.json' => 'build/one_html/index.html' do
 				template 'lib/template/one_html.rhtml', book.getBinding, 'build/one_html/index.html'
 			end
@@ -52,7 +57,7 @@ namespace :book do
 	namespace :latex do
 		directory 'build/raw_latex'
 
-		task :raw_latex => 'build/raw_latex' do
+		task :raw_latex => ['build/raw_latex', 'build/medias'] do
 			book.toc.each do |source|
 				target = 'build/raw_latex/' + source.ext('tex')
 				create "source/#{source}" => target do
@@ -65,8 +70,8 @@ namespace :book do
 			end
 			MaRuKu::Out::Latex::Medias.each do |media|
 				if File.exist? "source/#{media}"
-					create "source/#{media}" => "build/raw_latex/#{media}" do
-						cp "source/#{media}", "build/raw_latex/#{media}"
+					create "source/#{media}" => "build/medias/#{media}" do
+						cp "source/#{media}", "build/medias/#{media}"
 					end
 				end
 			end
@@ -76,7 +81,8 @@ namespace :book do
 				template 'lib/template/book.tex.rhtml', book.getBinding, 'build/raw_latex/__index.tex'
 			end
 		end
-		task :pdf => [:latex, 'ditaa:latex'] do
+		task :pdf => [:latex, '^medias'] do
+			cp FileList['build/medias/*'], 'build/raw_latex/'
 			create FileList.new('build/raw_latex/*.tex') => 'build/raw_latex/__index.pdf' do
 				Dir.chdir 'build/raw_latex' do
 					2.times do
@@ -87,36 +93,21 @@ namespace :book do
 		end
 	end
 
+	task :medias
+
 	namespace :ditaa do
-		task :convert => 'build/ditaa' do
+		task :convert => 'build/medias' do
 			Dir.chdir 'source/' do
 				FileList.new('**/*.ditaa').each do |ditaa|
-					target = "../build/ditaa/" + ditaa.ext('png')
+					target = "../build/medias/" + ditaa.ext('png')
 					create ditaa => target do
 						sh "ditaa -s 2 #{ditaa} #{target}"
 					end
 				end
 			end
 		end
-		def cp_ditaa folder
-			pp FileList['source/**/*.ditaa']
-			FileList['source/**/*.ditaa'].each do |ditaa|
-				src = ditaa.ext('png')[7..-1]
-				target = "build/#{folder}/#{src}"
-				src = 'build/ditaa/' + src
-				pp src => target
-				create src => target do
-					cp src, target
-				end
-			end
-		end
-		task :latex => :convert do
-			cp_ditaa 'raw_latex'
-		end
-		task :html => :convert do
-			cp_ditaa 'raw_html'
-		end
 	end
+	task :medias => 'ditaa:convert'
 
 	desc "Clean build files"
 	task :clean do
