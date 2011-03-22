@@ -6,8 +6,10 @@ module BookOfMark
 	class Book
 		attr :folder
 		attr :path
+		attr :medias
 		#read a .book description
 		def initialize description
+			@medias = []
 			@md = nil
 			@path = description
 			folder = description.split('/')
