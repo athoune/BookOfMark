@@ -13,13 +13,6 @@ namespace :book do
 					end
 				end
 			end
-			MaRuKu::Out::Latex::Medias.each do |media|
-				if File.exist? "source/#{media}"
-					create "source/#{media}" => "build/medias/#{media}" do
-						cp "source/#{media}", "build/medias/#{media}"
-					end
-				end
-			end
 		end
 		task :latex => :raw_latex do
 			create book.path => 'build/raw_latex/__index.tex' do

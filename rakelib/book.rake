@@ -12,14 +12,17 @@ require 'filter'
 
 namespace :book do
 	include BookOfMark
+	directory 'build/medias'
 
 	def info txt
 		puts "[Info] #{txt}"
 	end
 
-
-	task :medias
-
+	task :medias do
+		FileList['source/**/*.png'].each do |media|
+			cp media, 'build/medias/'
+		end
+	end
 
 	desc "Clean build files"
 	task :clean do

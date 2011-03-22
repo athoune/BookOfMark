@@ -2,7 +2,6 @@ namespace :book do
 	namespace :html do
 		directory 'build/raw_html'
 		directory 'build/one_html'
-		directory 'build/medias'
 
 		task :raw_html => 'build/raw_html' do
 			md2html do |doc|
