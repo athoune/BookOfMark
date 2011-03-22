@@ -17,97 +17,9 @@ namespace :book do
 		puts "[Info] #{txt}"
 	end
 
-	namespace :html do
-		directory 'build/raw_html'
-		directory 'build/one_html'
-		directory 'build/medias'
-
-		task :raw_html => 'build/raw_html' do
-			md2html do |doc|
-				6.times do |i|
-					doc.css("h#{i}").each do |h|
-						h.before "<a name=#{h.text}></a>"
-					end
-				end
-			end
-		end
-		task :index => :raw_html do
-			IDX = "build/raw_html/index.json"
-			create book.html_files => IDX do
-				info "new index"
-				buffer = ''
-				book.html_files.each{ |html| buffer += IO.read(html) + "\n"}
-				File.open(IDX, 'w') do |f|
-					f.write Html2index.parse(buffer).tree.to_json
-				end
-			end
-		end
-		task :one_html => [:index, 'build/one_html', '^medias'] do
-			Html2index.imgs(IO.read('build/one_html/index.html')).imgs.each do |img|
-				path = "source/#{img}"
-				cp path, "build/one_html/#{img}" if File.exist? path
-			end
-			cp FileList['build/medias/*'], 'build/one_html/'
-			create 'build/raw_html/index.json' => 'build/one_html/index.html' do
-				template 'lib/template/one_html.rhtml', book.getBinding, 'build/one_html/index.html'
-			end
-		end
-	end
-	
-	namespace :latex do
-		directory 'build/raw_latex'
-
-		task :raw_latex => ['build/raw_latex', 'build/medias'] do
-			book.toc.each do |source|
-				target = 'build/raw_latex/' + source.ext('tex')
-				create "source/#{source}" => target do
-					info "converting #{source} => #{target}"
-					m = Maruku.new IO.read("source/#{source}")
-					File.open(target, 'w') do |f|
-						f.write m.to_latex
-					end
-				end
-			end
-			MaRuKu::Out::Latex::Medias.each do |media|
-				if File.exist? "source/#{media}"
-					create "source/#{media}" => "build/medias/#{media}" do
-						cp "source/#{media}", "build/medias/#{media}"
-					end
-				end
-			end
-		end
-		task :latex => :raw_latex do
-			create book.path => 'build/raw_latex/__index.tex' do
-				template 'lib/template/book.tex.rhtml', book.getBinding, 'build/raw_latex/__index.tex'
-			end
-		end
-		task :pdf => [:latex, '^medias'] do
-			cp FileList['build/medias/*'], 'build/raw_latex/'
-			create FileList.new('build/raw_latex/*.tex') => 'build/raw_latex/__index.pdf' do
-				Dir.chdir 'build/raw_latex' do
-					2.times do
-						sh 'pdflatex __index.tex'
-					end
-				end
-			end
-		end
-	end
 
 	task :medias
 
-	namespace :ditaa do
-		task :convert => 'build/medias' do
-			Dir.chdir 'source/' do
-				FileList.new('**/*.ditaa').each do |ditaa|
-					target = "../build/medias/" + ditaa.ext('png')
-					create ditaa => target do
-						sh "ditaa -s 2 #{ditaa} #{target}"
-					end
-				end
-			end
-		end
-	end
-	task :medias => 'ditaa:convert'
 
 	desc "Clean build files"
 	task :clean do
@@ -120,17 +32,4 @@ namespace :book do
 		end
 	end
 	
-	task :img => 'html:one_html' do
-		i = Html2index.imgs IO.read('build/one_html/index.html')
-		pp i.imgs
-	end
-
-	desc "Build pdf"
-	task :pdf => 'latex:pdf'
-	
-	namespace :pdf do
-		task :open => '^pdf' do
-			sh "open build/raw_latex/__index.pdf"
-		end
-	end
 end
