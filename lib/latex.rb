@@ -10,14 +10,15 @@ module MaRuKu
 				Medias << self.url
 				"\\includegraphics[width=10cm]{#{self.url}}"
 			end
-			TexHeaders = {
-				1=>'section',
-				2=>'subsection',
-				3=>'subsubsection',
-				4=>'paragraph'}
+			BookTexHeaders = {
+				1=>'chapter',
+				2=>'section',
+				3=>'subsection',
+				4=>'subsubsection',
+				5=>'subsubsection'}
 
 			def to_latex_header
-				h = TexHeaders[self.level] || 'paragraph'
+				h = BookTexHeaders[self.level] || 'paragraph'
 				title = children_to_latex
 				%{\\%s{%s}\n\n} % [ h, title]
 			end
