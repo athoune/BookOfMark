@@ -42,7 +42,7 @@ namespace :book do
 				end
 			end
 		end
-		task :one_html => [:index, 'build/one_html'] do
+		task :one_html => [:index, 'build/one_html', 'ditaa:html'] do
 			create 'build/raw_html/index.json' => 'build/one_html/index.html' do
 				template 'lib/template/one_html.rhtml', book.getBinding, 'build/one_html/index.html'
 			end
@@ -64,8 +64,10 @@ namespace :book do
 				end
 			end
 			MaRuKu::Out::Latex::Medias.each do |media|
-				create "source/#{media}" => "build/raw_latex/#{media}" do
-					cp "source/#{media}", "build/raw_latex/#{media}"
+				if File.exist? "source/#{media}"
+					create "source/#{media}" => "build/raw_latex/#{media}" do
+						cp "source/#{media}", "build/raw_latex/#{media}"
+					end
 				end
 			end
 		end
@@ -74,7 +76,7 @@ namespace :book do
 				template 'lib/template/book.tex.rhtml', book.getBinding, 'build/raw_latex/__index.tex'
 			end
 		end
-		task :pdf => :latex do
+		task :pdf => [:latex, 'ditaa:latex'] do
 			create FileList.new('build/raw_latex/*.tex') => 'build/raw_latex/__index.pdf' do
 				Dir.chdir 'build/raw_latex' do
 					2.times do
@@ -88,13 +90,31 @@ namespace :book do
 	namespace :ditaa do
 		task :convert => 'build/ditaa' do
 			Dir.chdir 'source/' do
-				FileList.new('*.ditaa').each do |ditaa|
+				FileList.new('**/*.ditaa').each do |ditaa|
 					target = "../build/ditaa/" + ditaa.ext('png')
 					create ditaa => target do
-						sh "ditaa #{ditaa} #{target}"
+						sh "ditaa -s 2 #{ditaa} #{target}"
 					end
 				end
 			end
+		end
+		def cp_ditaa folder
+			pp FileList['source/**/*.ditaa']
+			FileList['source/**/*.ditaa'].each do |ditaa|
+				src = ditaa.ext('png')[7..-1]
+				target = "build/#{folder}/#{src}"
+				src = 'build/ditaa/' + src
+				pp src => target
+				create src => target do
+					cp src, target
+				end
+			end
+		end
+		task :latex => :convert do
+			cp_ditaa 'raw_latex'
+		end
+		task :html => :convert do
+			cp_ditaa 'raw_html'
 		end
 	end
 
