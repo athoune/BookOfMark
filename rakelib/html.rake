@@ -12,7 +12,8 @@ namespace :book do
 				end
 			end
 		end
-		task :index => :raw_html do
+		task :filter => :raw_html
+		task :index => :filter do
 			IDX = "build/raw_html/index.json"
 			create book.html_files => IDX do
 				info "new index"
@@ -24,10 +25,6 @@ namespace :book do
 			end
 		end
 		task :one_html => [:index, 'build/one_html', '^medias'] do
-			Html2index.imgs(IO.read('build/one_html/index.html')).imgs.each do |img|
-				path = "source/#{img}"
-				cp path, "build/one_html/#{img}" if File.exist? path
-			end
 			cp FileList['build/medias/*'], 'build/one_html/'
 			create 'build/raw_html/index.json' => 'build/one_html/index.html' do
 				template 'lib/template/one_html.rhtml', book.getBinding, 'build/one_html/index.html'
