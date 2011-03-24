@@ -1,0 +1,5 @@
+digraph G {
+	filter -> raw_html;
+	assembly -> filter;
+	assembly -> medias;
+}
