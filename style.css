@@ -1,0 +1,92 @@
+/*
+#A3B2BF gris
+#9FA66F vert
+#F2D7B6 beige
+#8C6E5D marron
+black
+*/
+
+body {
+	margin-top: 1.0em;
+	background-color: #997867;
+	color: #ffffff;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+#container {
+	margin: 10px auto 0;
+	width: 700px;
+	background: #8C6E5D 0 30px;
+	padding: 0 10px 10px;
+	border: thin solid #775c4e;
+	-webkit-box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+	-moz-box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+	box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+}
+h1 {
+	display: block;
+	width: 700px;
+	height: 481px;
+	color: #9FA66F; 
+	margin-bottom: 3px;
+	background: url(lion.png) no-repeat 0 60px;
+	text-shadow: black 0 0 3px;
+	font: 6em 'UnifrakturCook';
+	margin-top: 10px;
+}
+h1 .small { 
+	font-size: 0.4em;
+}
+h1 a {
+	text-decoration: none;
+	color: #9FA66F;
+	text-shadow: black 0 0 3px;
+}
+h2 { 
+	font-size: 1.6em;
+	color: #9FA66F;
+	margin-bottom: 0;
+}
+h3 {
+	text-align: center;
+	color: #9FA66F;
+}
+a {
+	color: #9FA66F;
+}
+.description { 
+	font-size: 1.5em;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	color: black;
+	background-color: #A3B2BF;
+	padding: 10px;
+	text-align: justify;
+		border: thin solid #775c4e;
+
+}
+.description:first-letter {
+	font: 2.4em 'UnifrakturCook';
+	float: left;
+	margin: 0 1px -7px 0;
+}
+.download {
+	float: right;
+}
+pre {
+	background: #000;
+	color: #F2D7B6;
+	padding: 15px;}
+	hr { 
+		border: 0;
+		width: 80%;
+		border-bottom:1px solid #aaa
+	}
+	.footer {
+	font-size: 0.7em;
+		text-align:center;
+		padding-top:30px;
+	}
+#features {
+	width: 700px;
+	column-width: 300px;
+}
