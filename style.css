@@ -13,6 +13,7 @@ body {
 	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 #container {
+	border-radius: 350px 350px 0px 0px;
 	margin: 10px auto 0;
 	width: 700px;
 	background: #8C6E5D 0 30px;
@@ -27,11 +28,12 @@ h1 {
 	width: 700px;
 	height: 481px;
 	color: #9FA66F; 
-	margin-bottom: 3px;
+	margin-bottom: -300px;
 	background: url(lion.png) no-repeat 0 60px;
 	text-shadow: black 0 0 3px;
 	font: 6em 'UnifrakturCook';
 	margin-top: 10px;
+	padding-top: 300px;
 }
 h1 .small { 
 	font-size: 0.4em;
