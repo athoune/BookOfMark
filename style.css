@@ -27,9 +27,9 @@ h1 {
 	display: block;
 	width: 700px;
 	height: 481px;
-	color: #9FA66F; 
+	color: #7B9975; 
 	margin-bottom: -300px;
-	background: url(lion.png) no-repeat 0 60px;
+	background: url(lion.png) no-repeat 0 67px;
 	text-shadow: black 0 0 3px;
 	font: 6em 'UnifrakturCook';
 	margin-top: 10px;
@@ -40,12 +40,12 @@ h1 .small {
 }
 h1 a {
 	text-decoration: none;
-	color: #9FA66F;
+	color: #7B9975;
 	text-shadow: black 0 0 3px;
 }
 h2 { 
 	font-size: 1.6em;
-	color: #9FA66F;
+	color: #7B9975;
 	margin-bottom: 0;
 }
 h3 {
@@ -53,18 +53,18 @@ h3 {
 	color: #9FA66F;
 }
 a {
-	color: #9FA66F;
+	color: #7B9975;
 }
 .description { 
 	font-size: 1.5em;
 	margin-bottom: 30px;
 	margin-top: 30px;
 	color: black;
-	background-color: #A3B2BF;
+	background-color: #a3b2bf;
 	padding: 10px;
 	text-align: justify;
-		border: thin solid #775c4e;
-
+	border: thin solid #775c4e;
+	opacity: 1;
 }
 .description:first-letter {
 	font: 2.4em 'UnifrakturCook';
@@ -76,7 +76,7 @@ a {
 }
 pre {
 	background: #000;
-	color: #9FA66F;
+	color: #7B9975;
 	padding: 10px;
 	border: thin solid #775c4e;
 }
