@@ -8,17 +8,17 @@ black
 
 body {
 	margin-top: 1.0em;
-	background-color: #997867;
-	color: #A3B2BF;
+	background-color: #8C6E5D;/*#997867;*/
+	color: #d8b9a7;
 	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 #container {
 	border-radius: 350px 350px 0px 0px;
 	margin: 10px auto 0;
 	width: 700px;
-	background: #8C6E5D 0 30px;
+	background: #3f2A24 0 30px;
 	padding: 0 10px 10px;
-	border: thin solid #775c4e;
+	border: thin solid #3a2621;
 	-webkit-box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
 	-moz-box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
 	box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
@@ -27,25 +27,28 @@ h1 {
 	display: block;
 	width: 700px;
 	height: 481px;
-	color: #7B9975; 
+	color: #1E3F3F; 
 	margin-bottom: -300px;
 	background: url(lion.png) no-repeat 0 67px;
-	text-shadow: black 0 0 3px;
+	text-shadow: #5e8c8c 0 0 3px;
 	font: 6em 'UnifrakturCook';
 	margin-top: 10px;
 	padding-top: 300px;
+	white-space: normal;
+	padding-right: 0;
+	padding-left: 0;
 }
 h1 .small { 
 	font-size: 0.4em;
 }
 h1 a {
 	text-decoration: none;
-	color: #7B9975;
-	text-shadow: black 0 0 3px;
+	color: #1E3F3F;
+	/*text-shadow: black 0 0 3px;*/
 }
 h2 { 
 	font-size: 1.6em;
-	color: #7B9975;
+	color: #5e8c8c;
 	margin-bottom: 0;
 }
 h3 {
@@ -53,17 +56,17 @@ h3 {
 	color: #9FA66F;
 }
 a {
-	color: #7B9975;
+	color: #5e8c8c;
 }
 .description { 
 	font-size: 1.5em;
 	margin-bottom: 30px;
 	margin-top: 30px;
-	color: black;
-	background-color: #a3b2bf;
+	color: #1E3F3F;
+	background-color: #5e8c8c;
 	padding: 10px;
 	text-align: justify;
-	border: thin solid #775c4e;
+	border: thin solid #1E3F3F;
 	opacity: 1;
 }
 .description:first-letter {
@@ -76,7 +79,7 @@ a {
 }
 pre {
 	background: #000;
-	color: #7B9975;
+	color: #5e8c8c;
 	padding: 10px;
 	border: thin solid #775c4e;
 }
