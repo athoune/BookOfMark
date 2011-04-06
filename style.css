@@ -97,3 +97,13 @@ hr {
 	width: 700px;
 	column-width: 300px;
 }
+
+#A {
+	float: right;
+}
+.column {
+	width: 320px;
+	vertical-align: top;
+	padding-top: 0;
+	margin-top: 0;
+}
